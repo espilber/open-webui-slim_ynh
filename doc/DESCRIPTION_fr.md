@@ -1,0 +1,1 @@
+Open WebUI Slim est le même Open WebUI, mais configuré sans modèles IA locaux. Il requiert un LLM externe : Ollama (auto-hébergé) ou toute API compatible OpenAI. Aucun modèle d'embedding d'~1Go n'est téléchargé au premier démarrage, et la recherche web / génération d'images sont désactivées par défaut.

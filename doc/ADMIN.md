@@ -1,0 +1,1 @@
+Install Ollama from the YunoHost catalog if you chose the 'ollama' embedding engine, or set your OpenAI-compatible API key in Open WebUI admin panel > Connections. Guide: https://docs.openwebui.com/getting-started/quick-start/starting-with-ollama/

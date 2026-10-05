@@ -1,0 +1,93 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/main/schemas/manifest.v2.schema.json
+
+packaging_format = 2
+
+id = "open-webui-slim"
+name = "Open WebUI Slim"
+description.en = "Lightweight AI chat interface (requires external Ollama or OpenAI-compatible API, no local models)"
+description.fr = "Interface IA allégée (requiert Ollama externe ou API compatible OpenAI, sans modèles locaux)"
+
+version = "0.11.3~ynh1"
+
+maintainers = ["espilber"]
+
+[upstream]
+license = "BSD-3-Clause"
+website = "https://openwebui.com/"
+admindoc = "https://docs.openwebui.com/getting-started/"
+userdoc = "https://docs.openwebui.com/category/-tutorials"
+code = "https://github.com/open-webui/open-webui"
+
+[integration]
+yunohost = ">= 12.0.9"
+helpers_version = "2.1"
+
+architectures = "all"
+multi_instance = false
+
+ldap = true
+sso = false
+
+# Slim: no pre-downloaded embedding/Whisper models, but venv (torch, etc.)
+# is still ~2-4 GB. 6G is a realistic lower bound.
+disk = "6G"
+ram.build = "2G"
+ram.runtime = "2G"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.init_main_permission]
+    type = "group"
+    default = "all_users"
+
+    [install.language]
+    ask.en = "Choose the application language"
+    ask.fr = "Choisissez la langue de l'application"
+    type = "select"
+    choices = ["fr", "en"]
+    default = "fr"
+
+    [install.admin]
+    type = "user"
+
+    [install.ollama_base_url]
+    ask.en = "Ollama base URL (used if embedding engine is ollama)"
+    ask.fr = "URL de base Ollama (utilisée si le moteur d'embedding est ollama)"
+    type = "string"
+    default = "http://127.0.0.1:11434"
+    example = "http://127.0.0.1:11434"
+
+    [install.rag_embedding_engine]
+    ask.en = "Embedding engine for RAG (no local model in Slim version)"
+    ask.fr = "Moteur d'embedding pour le RAG (pas de modèle local en version Slim)"
+    help.en = "Slim has no bundled embedding model. Use 'ollama' (install Ollama from the catalog) or 'openai' (any OpenAI-compatible API, key configured after install)."
+    help.fr = "Slim n'embarque aucun modèle d'embedding. Utilisez 'ollama' (installez Ollama depuis le catalogue) ou 'openai' (toute API compatible OpenAI, clé à configurer après installation)."
+    type = "select"
+    choices = ["ollama", "openai"]
+    default = "ollama"
+
+[resources]
+
+    [resources.sources]
+
+    [resources.sources.main]
+    url = "https://github.com/open-webui/open-webui/archive/refs/tags/v0.11.3.tar.gz"
+    sha256 = "08c6c6927f6d9794b9f9cea14f133d19fc4ad0602db87bd64f295af4ae98501f"
+
+    autoupdate.strategy = "latest_github_tag"
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.data_dir]
+
+    [resources.permissions]
+    main.url = "/"
+
+    [resources.ports]
+
+    [resources.apt]
+    packages = "ffmpeg, python3-venv, python3-pip, python3-dev"
